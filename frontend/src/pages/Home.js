@@ -1,5 +1,4 @@
 import React from 'react';
-import Clock from '../components/Clock';
 import Feed from '../components/Feed';
 
 function Home() {
@@ -37,14 +36,6 @@ function Home() {
               </div>
           </div>
         </div>
-        
-        {/* <div className="lg:flex lg:justify-center lg:items-center flex-col lg:flex-row">
-          <div className="xl:w-1/5 md:w-2/5 p-3 mr-5 lg:mb-0">
-              <div className="bg-gray-800 p-6 rounded-lg flex justify-center items-center">
-                  <Clock />
-              </div>
-          </div>
-        </div> */}
       </div>
       <div className='bg-white'>
           <Feed />

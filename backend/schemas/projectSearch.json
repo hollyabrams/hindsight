@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://our.company.com/projectSearch.schema.json",
+    "type": "object",
+    "properties": {
+        "title": {
+            "type": "string",
+            "minLength": 1
+        },
+        "manager": {
+            "type": "string",
+            "minLength": 1
+        },
+        "status": {
+            "type": "string",
+            "enum": [
+                "planned",
+                "in progress",
+                "completed"
+            ]
+        }
+    }
+}

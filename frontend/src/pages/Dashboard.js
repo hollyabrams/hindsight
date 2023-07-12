@@ -68,7 +68,7 @@ const Dashboard = () => {
     }, []);
 
     return (
-        <div className="bg-gray-800 border border-gray-500 p-6 flex justify-center mt-10 rounded ml-8 mr-8">
+        <div className="bg-gray-300 border border-gray-500 p-6 flex justify-center mt-10 rounded ml-8 mr-8">
             {/* User Summary */}
             <section className="w-1/4 bg-gray-100 p-4 rounded mr-4">
                 <h1 className="text-3xl font-bold mb-4 text-gray-700">Dashboard</h1>
