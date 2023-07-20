@@ -17,12 +17,13 @@ const router = express.Router({ mergeParams: true });
 
 /** POST / { project } => { project }
  *
- * project should be { name, description, start date }
+ * project should be { title, description, manager, deadline, status }
  *
- * Returns { id, name, description, start date }
+ * Returns { id, title, description, manager, deadline, status }
  *
  * Authorization required: admin
  */
+
 
 router.post("/", ensureAdmin, async function (req, res, next) {
   try {

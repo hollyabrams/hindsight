@@ -27,7 +27,7 @@ app.use("/projects", projectsRoutes);
 
 
 app.get("/", (req, res) => {
-  res.send("Hello, Render!");
+  res.send("Hello, there!");
 });
 
 /** Handle 404 errors -- this matches everything */
