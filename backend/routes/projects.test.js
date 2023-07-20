@@ -29,7 +29,7 @@ describe("POST /projects", function () {
           title: "test",
           description: "test project",
           manager: "John Doe",
-          deadline: "2023-07-20",
+          deadline: "2024-09-30T04:00:00.000Z",
           status: "in progress",
         })
         .set("authorization", `Bearer ${adminToken}`);
@@ -40,7 +40,7 @@ describe("POST /projects", function () {
         title: "test",
         description: "test project",
         manager: "John Doe",
-        deadline: "2023-07-20",
+        deadline: "2024-09-30T04:00:00.000Z",
         status: "in progress",
       },
     });
@@ -113,11 +113,11 @@ describe("GET /projects/:id", function () {
     expect(resp.body).toEqual({
       project: {
         id: testProjectIds[0],
-        title: "test",
-        description: "test project",
-        manager: "John Doe",
-        deadline: "2023-07-20",
-        status: "in progress",
+        title: "Test Project 1",
+        description: "Test Project 1 description",
+        manager: "Manager1",
+        deadline: "2024-09-30T04:00:00.000Z",
+        status: "planned",
       },
     });
   });
@@ -142,10 +142,10 @@ describe("PATCH /projects/:id", function () {
       project: {
         id: testProjectIds[0],
         title: "New Title",
-        description: "test project",
-        manager: "John Doe",
-        deadline: "2023-07-20",
-        status: "in progress",
+        description: "Test Project 1 description",
+        manager: "Manager1",
+        deadline: "2024-09-30T04:00:00.000Z",
+        status: "planned",
       },
     });
   });

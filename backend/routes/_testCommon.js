@@ -17,7 +17,7 @@ async function commonBeforeAll() {
     title: "Test Project 1",
     description: "Test Project 1 description",
     manager: "Manager1",
-    deadline: "2024-12-31",
+    deadline: "2024-09-30T04:00:00.000Z",
     status: "planned"
   })).id;
 
@@ -25,7 +25,7 @@ async function commonBeforeAll() {
     title: "Test Project 2",
     description: "Test Project 2 description",
     manager: "Manager2",
-    deadline: "2024-11-30",
+    deadline: "2024-09-30T04:00:00.000Z",
     status: "in progress"
   })).id;
 
@@ -33,7 +33,7 @@ async function commonBeforeAll() {
     title: "Test Project 3",
     description: "Test Project 3 description",
     manager: "Manager3",
-    deadline: "2024-10-31",
+    deadline: "2024-09-30T04:00:00.000Z",
     status: "completed"
   })).id;
 
