@@ -204,26 +204,7 @@ class User {
     if (!user) throw new NotFoundError(`No user: ${username}`);
   }
 
-/** Add user projects */
-
-static async addProject(username, projectData) {
-  // Destructure the project data
-  const { name, description, startDate } = projectData;
-
-  // Perform the database query to insert the project
-  const result = await db.query(
-    `INSERT INTO projects (user_id, name, description, start_date)
-     VALUES ((SELECT id FROM users WHERE username=$1), $2, $3, $4)
-     RETURNING id, user_id AS "userId", name, description, start_date AS "startDate"`,
-    [username, name, description, startDate]
-  );
-
-  // Return the newly created project
-  return result.rows[0];
-}
-
-
-  /** Given a username, returns projects associated with a user.
+/** Given a username, returns projects associated with a user.
    *
    * Returns { user_id, project_id, description, date }
    *
@@ -235,16 +216,44 @@ static async addProject(username, projectData) {
               p.name,
               p.description,
               p.start_date AS "startDate"
-       FROM projects AS p
-       JOIN users AS u ON p.user_id = u.id
-       WHERE u.username = $1`,
+      FROM projects AS p
+      JOIN user_projects AS up ON p.id = up.project_id
+      JOIN users AS u ON up.user_id = u.id
+      WHERE u.username = $1`,
       [username]
     );
 
     return result.rows;
   }
 
-  
+   /** Given a username and project ID, associate the project with the user in the user_projects table.
+   *
+   * Returns undefined.
+   *
+   * Throws BadRequestError on duplicates.
+   **/
+
+   static async addProject(username, projectId) {
+    // Check for an existing association
+    const duplicateCheck = await db.query(
+      `SELECT user_id, project_id
+       FROM user_projects
+       WHERE user_id = (SELECT id FROM users WHERE username = $1)
+       AND project_id = $2`,
+      [username, projectId]
+    );
+
+    if (duplicateCheck.rows[0]) {
+      throw new BadRequestError(`Duplicate association: User '${username}' is already associated with project ID ${projectId}`);
+    }
+
+    // Create the new association
+    await db.query(
+      `INSERT INTO user_projects (user_id, project_id)
+       VALUES ((SELECT id FROM users WHERE username = $1), $2)`,
+      [username, projectId]
+    );
+  }
 }
 
 module.exports = User;

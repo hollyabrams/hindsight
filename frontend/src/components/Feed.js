@@ -35,7 +35,7 @@ export default function Feed() {
       <h1 className="font-medium text-2xl mb-4 text-gray-500">
         Retrospective Feed
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl mb-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl mb-5">
         {feedbacks.map(feedback => (
           <div key={feedback.id} className="border border-gray-700 p-4 rounded" style={{
             backgroundColor: '#fffc94', // post-it note yellow
@@ -49,9 +49,9 @@ export default function Feed() {
             lineHeight: '25px',
         }}
         >
-            <h2 className="font-medium text-lg text-gray-400">{feedback.user}:</h2>
-            <p className="text-gray-400">{feedback.text}</p>
-            <div className="mt-2 space-x-2">
+            <h2 className="font-medium text-lg text-gray-500">{feedback.user}:</h2>
+            <p className="text-gray-500">{feedback.text}</p>
+            <div className="mt-4 space-x-4">
               {feedback.tags.map((tag, index) => (
                 <span key={index} className="inline-block bg-indigo-500 text-white rounded-full px-2 py-1 text-xs font-semibold">
                   {tag}

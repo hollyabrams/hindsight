@@ -70,7 +70,7 @@ const Dashboard = () => {
     return (
         <div className="bg-gray-300 border border-gray-500 p-6 flex justify-center mt-10 rounded ml-8 mr-8">
             {/* User Summary */}
-            <section className="w-1/4 bg-gray-100 p-4 rounded mr-4">
+            <section className="w-1/4 bg-white p-4 rounded mr-4">
                 <h1 className="text-3xl font-bold mb-4 text-gray-700">Dashboard</h1>
                 <h2 className="text-2xl font-semibold mb-2 text-gray-500">User Summary</h2>
                 <p className="mb-1">Total Projects: {projects.length}</p>
@@ -81,7 +81,7 @@ const Dashboard = () => {
             {/* Right Side Content */}
             <div className="w-11/20 overflow-scroll h-full">
                 {/* Projects Overview */}
-                <section className="mb-6 bg-gray-100 p-4 rounded">
+                <section className="mb-6 bg-white p-4 rounded">
                     <h2 className="text-2xl font-semibold mb-2 text-gray-700">Projects Overview</h2>
                     {/* Replace this with a ProjectCard component or similar that shows more detail */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -90,7 +90,7 @@ const Dashboard = () => {
                 </section>
                 
                 {/* Latest Retrospectives */}
-                <section className="mb-6 bg-gray-100 p-4 rounded">
+                <section className="mb-6 bg-white p-4 rounded">
                     <h2 className="text-2xl font-semibold mb-2 text-gray-700">Latest Retrospectives</h2>
                     {/* Replace this with a RetrospectiveCard component or similar that shows more detail */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -99,7 +99,7 @@ const Dashboard = () => {
                 </section>
                 
                 {/* Pending Action Items */}
-                <section className="mb-6 bg-gray-100 p-4 rounded">
+                <section className="mb-6 bg-white p-4 rounded">
                     <h2 className="text-2xl font-semibold mb-2 text-gray-700">Pending Action Items</h2>
                     {/* Replace this with an ActionItemCard component or similar that shows more detail */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
