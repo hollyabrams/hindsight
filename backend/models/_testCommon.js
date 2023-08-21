@@ -4,6 +4,7 @@ const db = require("../db.js");
 const { BCRYPT_WORK_FACTOR } = require("../config");
 
 const testProjectIds = [];
+const testRetrospectiveIds = [];
 
 /**
  * Clears all data from tables: retrospectives, projects, and users.
@@ -89,17 +90,46 @@ async function commonBeforeAll() {
     userValues
   );
 
-
   // Add some retrospectives
-  await db.query(
-    `
-    INSERT INTO retrospectives (participant_name, facilitator, project_id, start_doing, continue_doing, stop_doing, action_items, lessons_learned)
-    VALUES ('u1', 'u1', $1, 'Start doing for project 1', 'Continue doing for project 1', 'Stop doing for project 1', 'Action items for project 1', 'Lessons learned for project 1'),
-           ('u2', 'u2', $2, 'Start doing for project 2', 'Continue doing for project 2', 'Stop doing for project 2', 'Action items for project 2', 'Lessons learned for project 2')
-  `,
-    testProjectIds
+  const retrospectiveData = [
+    {
+      participant_name: 'u1',
+      facilitator: 'u1',
+      project_id: testProjectIds[0],
+      start_doing: 'Start doing for project 1',
+      continue_doing: 'Continue doing for project 1',
+      stop_doing: 'Stop doing for project 1',
+      action_items: 'Action items for project 1',
+      lessons_learned: 'Lessons learned for project 1'
+    },
+    {
+      participant_name: 'u2',
+      facilitator: 'u2',
+      project_id: testProjectIds[1],
+      start_doing: 'Start doing for project 2',
+      continue_doing: 'Continue doing for project 2',
+      stop_doing: 'Stop doing for project 2',
+      action_items: 'Action items for project 2',
+      lessons_learned: 'Lessons learned for project 2'
+    }
+  ];
+
+  // Insert retrospectives and collect their ids
+  const retrospectiveRes = await Promise.all(
+    retrospectiveData.map(async (retrospective) => {
+      const { rows } = await db.query(
+        `INSERT INTO retrospectives (participant_name, facilitator, project_id, start_doing, continue_doing, stop_doing, action_items, lessons_learned)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+         RETURNING id`,
+        Object.values(retrospective)
+      );
+      return rows[0].id;
+    })
   );
+
+  testRetrospectiveIds.push(...retrospectiveRes);
 }
+
 
 /**
  * Begins a database transaction before each test case.
@@ -128,5 +158,6 @@ module.exports = {
   commonAfterEach,
   commonAfterAll,
   testProjectIds,
+  testRetrospectiveIds 
 };
 
