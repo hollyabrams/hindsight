@@ -4,14 +4,19 @@ const db = require("../db.js");
 const User = require("../models/user");
 const { createToken } = require("../helpers/tokens");
 const Project = require("../models/project.js");
+const Retrospective = require("../models/retrospective.js");
 
 const testProjectIds = [];
+const testRetrospectiveIds = [];
 
 async function commonBeforeAll() {
   // noinspection SqlWithoutWhere
   await db.query("DELETE FROM users");
   // noinspection SqlWithoutWhere
   await db.query("DELETE FROM projects");
+  // noinspection SqlWithoutWhere
+  await db.query("DELETE FROM retrospectives");
+
 
   testProjectIds[0] = (await Project.create({
     title: "Test Project 1",
@@ -35,6 +40,28 @@ async function commonBeforeAll() {
     manager: "Manager3",
     deadline: "2024-09-30T04:00:00.000Z",
     status: "completed"
+  })).id;
+
+  testRetrospectiveIds[0] = (await Retrospective.create({
+    participant_name: "Participant 1",
+    facilitator: "Facilitator 1",
+    project_id: testProjectIds[0], 
+    start_doing: "Start coding regularly",
+    continue_doing: "Continuous integration",
+    stop_doing: "Late night commits",
+    action_items: "Refactor old code",
+    lessons_learned: "Unit testing is crucial"
+  })).id;
+
+  testRetrospectiveIds[1] = (await Retrospective.create({
+    participant_name: "Participant 2",
+    facilitator: "Facilitator 2",
+    project_id: testProjectIds[1],
+    start_doing: "Pair programming sessions",
+    continue_doing: "Morning stand-ups",
+    stop_doing: "Skipping code reviews",
+    action_items: "Adopt TDD",
+    lessons_learned: "Code reviews improve code quality"
   })).id;
 
   await User.register({
@@ -94,6 +121,7 @@ module.exports = {
     commonAfterEach,
     commonAfterAll,
     testProjectIds,
+    testRetrospectiveIds,
     u1Token,
     u2Token,
     u3Token,

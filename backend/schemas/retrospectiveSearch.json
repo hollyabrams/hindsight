@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://our.company.com/retrospectiveSearch.schema.json",
+    "type": "object",
+    "properties": {
+        "participant_name": {
+            "type": "string",
+            "minLength": 1
+        },
+        "facilitator": {
+            "type": "string",
+            "minLength": 1
+        },
+        "project_id": {
+            "type": "number"
+        }
+    }
+}

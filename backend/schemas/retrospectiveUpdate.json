@@ -1,0 +1,31 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://our.company.com/retrospectiveUpdate.schema.json",
+    "type": "object",
+    "properties": {
+        "participant_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50
+        },
+        "feedback": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+        },
+        "facilitator": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50
+        },
+        "retrospective_date": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "action_items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+        }
+    }
+}

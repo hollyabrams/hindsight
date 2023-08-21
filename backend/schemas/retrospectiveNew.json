@@ -1,0 +1,49 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://our.company.com/retrospectiveNew.schema.json",
+    "type": "object",
+    "properties": {
+        "participant_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+        },
+        "facilitator": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+        },
+        "project_id": {
+            "type": "number"
+        },
+        "start_doing": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+        },
+        "continue_doing": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+        },
+        "stop_doing": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+        },
+        "action_items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+        },
+        "lessons_learned": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+        }
+    },
+    "required": [
+        "facilitator",
+        "project_id"
+    ]
+}
