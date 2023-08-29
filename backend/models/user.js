@@ -213,9 +213,9 @@ class User {
   static async getProjects(username) {
     const result = await db.query(
       `SELECT p.id,
-              p.name,
+              p.title,
               p.description,
-              p.start_date AS "startDate"
+              p.created_at AS "startDate"
       FROM projects AS p
       JOIN user_projects AS up ON p.id = up.project_id
       JOIN users AS u ON up.user_id = u.id

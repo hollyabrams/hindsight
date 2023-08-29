@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Card, CardBody } from 'reactstrap';
 
 /** User login form.
@@ -14,7 +14,7 @@ import { Card, CardBody } from 'reactstrap';
  */
 
 const LoginForm = ({ login }) => {
-  const navigate = useNavigate();
+  const history = useHistory();
   const INITIAL_STATE = {
     username: '',
     password: ''
@@ -49,7 +49,7 @@ const LoginForm = ({ login }) => {
       // makes a POST request to Api.js and adds corresponding data to matching category in db.json
       if (result.success) {
         // imperatively redirect to correct page and refresh to see new data
-        navigate.push('/');
+        history.push('/');
       } else {
         setFormErrors(result.errors);
       }
@@ -80,7 +80,7 @@ const LoginForm = ({ login }) => {
                 />
               </div>
             ))}
-            {formErrors && <p className="text-red-500 text-xs italic">{formErrors}</p>}
+            {formErrors && <p className="text-red-500 text-xs italic">{formErrors.toString()}</p>}
             <button
               type="submit"
               className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"

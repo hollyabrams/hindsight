@@ -1,11 +1,19 @@
 import React, { useState, useContext, useEffect } from 'react';
 import UserContext from '../UserContext';
-import HindsightApi from '../HindsightApi'
+import HindsightApi from '../api'
 
 const ProfileForm = ({ deleteUser }) => {
   const { currentUser, setCurrentUser } = useContext(UserContext);
 
-  const [formData, setFormData] = useState({});
+  const INITIAL_STATE = {
+    username: currentUser?.username || "",
+    password: "",
+    firstName: currentUser?.firstName || "",
+    lastName: currentUser?.lastName || "",
+    email: currentUser?.email || ""
+  };
+
+  const [formData, setFormData] = useState(INITIAL_STATE);
   const [formErrors, setFormErrors] = useState([]);
   const [message, setMessage] = useState('');
   

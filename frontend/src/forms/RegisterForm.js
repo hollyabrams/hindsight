@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Card, CardBody} from 'reactstrap';
 
 /** User register form.
@@ -14,7 +14,7 @@ import { Card, CardBody} from 'reactstrap';
  */
 
 const RegisterForm = ({ register }) => {
-  const navigate = useNavigate();
+  const history = useHistory();
   const INITIAL_STATE = {
     username: '',
     password: '',
@@ -55,7 +55,7 @@ const RegisterForm = ({ register }) => {
       // makes a POST request to Api.js and adds corresponding data to matching category in db.json
       if (result.success) {
         // imperatively redirect to correct page and refresh to see new data
-        navigate.push('/');
+        history.push('/');
       } else {
         setFormErrors(result.errors);
       }

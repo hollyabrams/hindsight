@@ -1,71 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import HindsightApi from '../api';
+import UserContext from '../UserContext';
 import ProjectCard from '../components/ProjectCard';
 import RetrospectiveCard from '../components/RetrospectiveCard';
 import ActionItemCard from '../components/ActionItemCard';
 
 const Dashboard = () => {
-    const mockProjects = [
-        { 
-            id: 1, 
-            name: "Project 1", 
-            description: "Description for Project 1",
-            teamMembers: ['Member1', 'Member2'],
-            retrospectives: ['Retrospective1', 'Retrospective2'],
-            actionItems: ['Action Item 1', 'Action Item 2']
-        },
-        { 
-            id: 2, 
-            name: "Project 2", 
-            description: "Description for Project 2",
-            teamMembers: ['Member3', 'Member4'],
-            retrospectives: ['Retrospective3', 'Retrospective4'],
-            actionItems: ['Action Item 3', 'Action Item 4']
-        },
-    ];
-
-    const mockRetrospectives = [
-        { 
-            id: 1, 
-            name: "Retrospective 1", 
-            project: "Project 1",
-            date: "2023-07-12",
-            actionItems: ['Action Item 1', 'Action Item 2']
-        },
-        { 
-            id: 2, 
-            name: "Retrospective 2", 
-            project: "Project 2",
-            date: "2023-07-13",
-            actionItems: ['Action Item 3', 'Action Item 4']
-        },
-    ];
-
-    const mockActionItems = [
-        { 
-            id: 1, 
-            name: "Action Item 1", 
-            description: "Description for Action Item 1",
-            project: "Project 1",
-            dueDate: "2023-07-20",
-            status: "In Progress"
-        },
-        { 
-            id: 2, 
-            name: "Action Item 2", 
-            description: "Description for Action Item 2",
-            project: "Project 2",
-            dueDate: "2023-07-25",
-            status: "Completed"
-        },
-    ];
-
-    const [projects, setProjects] = useState(mockProjects);
-    const [retrospectives, setRetrospectives] = useState(mockRetrospectives);
-    const [actionItems, setActionItems] = useState(mockActionItems);
+    const { currentUser } = useContext(UserContext);
+    const [projects, setProjects] = useState([]);
+    const [retrospectives, setRetrospectives] = useState([]);
+    const [actionItems, setActionItems] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // Here you'll fetch data from your API when it's set up
-    }, []);
+        const fetchData = async () => {
+            setIsLoading(true);
+            try {
+                const proj = await HindsightApi.getProjects(currentUser.username); 
+                const retro = await HindsightApi.getRetrospectives(currentUser.username); 
+                
+                console.log("Projects: ", proj);
+                console.log("Retrospectives: ", retro);
+
+                const action = retro.flatMap(r => r.actionItems);
+                setProjects(proj);
+                setRetrospectives(retro);
+                setActionItems(action);
+            } catch (error) {
+                console.error("An error occurred while fetching data:", error);
+            }
+            setIsLoading(false);
+        };
+
+        if (currentUser) { 
+            fetchData();
+        }
+    }, [currentUser]); 
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (!currentUser) {
+        return <div>Please log in to view the dashboard.</div>;
+    }
+
 
     return (
         <div className="bg-gray-300 border border-gray-500 p-6 flex justify-center mt-10 rounded ml-8 mr-8">
@@ -76,6 +56,15 @@ const Dashboard = () => {
                 <p className="mb-1">Total Projects: {projects.length}</p>
                 <p className="mb-1">Total Retrospectives: {retrospectives.length}</p>
                 <p>Total Action Items: {actionItems.length}</p>
+                {/* Buttons to Add Project and Start Retrospective */}
+                <div className="mt-4">
+                    <Link to="/add-project">
+                        <button className="btn bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Add a Project</button>
+                    </Link>
+                    <Link to="/start-retrospective" className="ml-4">
+                        <button className="btn bg-green-500 text-white p-2 rounded hover:bg-green-600">Start a Retrospective</button>
+                    </Link>
+                </div>
             </section>
 
             {/* Right Side Content */}

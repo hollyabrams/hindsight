@@ -99,8 +99,8 @@ router.post("/:username/project", async function(req, res, next) {
 router.get('/:username/projects', async (req, res, next) => {
   try {
     const { username } = req.params;
-    const transactions = await User.getTransactions(username);
-    return res.json({ transactions });
+    const projects = await User.getProjects(username);
+    return res.json({ projects });
   } catch (err) {
     return next(err);
   }
