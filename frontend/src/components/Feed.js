@@ -35,9 +35,9 @@ export default function Feed() {
       <h1 className="font-medium text-2xl mb-4 text-gray-500">
         Retrospective Feed
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl mb-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-2xl mb-5">
         {feedbacks.map(feedback => (
-          <div key={feedback.id} className="border border-gray-700 p-4 rounded" style={{
+          <div key={feedback.id} className="border border-gray-200 p-4 rounded" style={{
             backgroundColor: '#fffc94', // post-it note yellow
             boxShadow: '5px 5px 15px rgba(0,0,0,0.1)', // soft shadow
             transform: 'rotate(0deg)', // slight rotation

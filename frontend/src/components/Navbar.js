@@ -11,7 +11,7 @@ function Navbar() {
     ? [
         { to: '/profile', name: 'Profile' },
         { to: '/dashboard', name: 'Dashboard' },
-        { to: '/', name: `Log out ${currentUser.first_name || currentUser.username}`, onClick: logout },
+        { to: '/', name: `Log out, ${currentUser.firstName || currentUser.username}`, onClick: logout },
       ]
     : [
         { to: '/login', name: 'Login' },
@@ -24,7 +24,7 @@ function Navbar() {
         <a href="/" className={'title-font font-medium text-white md:mb-0'}>
           Hindsight
         </a>
-        <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-700 flex flex-wrap items-center text-base justify-center">
+        <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-500 flex flex-wrap items-center text-base justify-center">
           {navItems.map((item, idx) => (
             <NavLink
               className="mr-5 hover:text-gray-400"

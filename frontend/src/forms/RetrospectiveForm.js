@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const RetrospectiveForm = ({ onSubmit }) => {
-  const [formData, setFormData] = useState({
+  const INITIAL_STATE = {
     participant_name: '',
     facilitator: '',
     project_id: '',
@@ -10,23 +10,34 @@ const RetrospectiveForm = ({ onSubmit }) => {
     stop_doing: '',
     action_items: '',
     lessons_learned: ''
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (formData.facilitator && formData.project_id) {
-      onSubmit(formData);
-    } else {
-      alert("Facilitator and Project ID are required!");
+  const [formData, setFormData] = useState(INITIAL_STATE);
+  const [formErrors, setFormErrors] = useState([]);
+  const [message, setMessage] = useState('');
+
+  const handleChange = evt => {
+    const { name, value } = evt.target;
+    setFormData(data => ({
+      ...data,
+      [name]: value
+    }));
+    setFormErrors([]);
+  };
+
+  const handleSubmit = async evt => {
+    evt.preventDefault();
+
+    try {
+      await onSubmit(formData);
+      setMessage('Retrospective data submitted successfully!');
+      setFormData(INITIAL_STATE);
+    } catch (errors) {
+      setFormErrors(errors);
+      return;
     }
+
+    setFormErrors([]);
   };
 
   return (
@@ -68,14 +79,87 @@ const RetrospectiveForm = ({ onSubmit }) => {
                 className="block w-full p-2 border border-gray-300 rounded-md"
               />
             </div>
+            
+            {/* Start Doing field */}
+            <div>
+              <label htmlFor="start_doing" className="block text-gray-700 text-sm font-bold mb-2">
+                Start Doing
+              </label>
+              <textarea
+                name="start_doing"
+                id="start_doing"
+                value={formData.start_doing}
+                onChange={handleChange}
+                className="block w-full p-2 border border-gray-300 rounded-md"
+                rows={3}
+              />
+            </div>
 
-            {/* Other fields go here */}
+            {/* Continue Doing field */}
+            <div>
+              <label htmlFor="continue_doing" className="block text-gray-700 text-sm font-bold mb-2">
+                Continue Doing
+              </label>
+              <textarea
+                name="continue_doing"
+                id="continue_doing"
+                value={formData.continue_doing}
+                onChange={handleChange}
+                className="block w-full p-2 border border-gray-300 rounded-md"
+                rows={3}
+              />
+            </div>
+
+            {/* Stop Doing field */}
+            <div>
+              <label htmlFor="stop_doing" className="block text-gray-700 text-sm font-bold mb-2">
+                Stop Doing
+              </label>
+              <textarea
+                name="stop_doing"
+                id="stop_doing"
+                value={formData.stop_doing}
+                onChange={handleChange}
+                className="block w-full p-2 border border-gray-300 rounded-md"
+                rows={3}
+              />
+            </div>
+
+            {/* Action Items field */}
+            <div>
+              <label htmlFor="action_items" className="block text-gray-700 text-sm font-bold mb-2">
+                Action Items
+              </label>
+              <textarea
+                name="action_items"
+                id="action_items"
+                value={formData.action_items}
+                onChange={handleChange}
+                className="block w-full p-2 border border-gray-300 rounded-md"
+                rows={3}
+              />
+            </div>
+
+            {/* Lessons Learned field */}
+            <div>
+              <label htmlFor="lessons_learned" className="block text-gray-700 text-sm font-bold mb-2">
+                Lessons Learned
+              </label>
+              <textarea
+                name="lessons_learned"
+                id="lessons_learned"
+                value={formData.lessons_learned}
+                onChange={handleChange}
+                className="block w-full p-2 border border-gray-300 rounded-md"
+                rows={3}
+              />
+            </div>
             
             <button
               type="submit"
               className="btn w-full py-2 mt-4 bg-indigo-500 text-white rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
             >
-              Start Retrospective
+              Submit Retrospective Data
             </button>
           </form>
         </div>
@@ -85,6 +169,7 @@ const RetrospectiveForm = ({ onSubmit }) => {
 };
 
 export default RetrospectiveForm;
+
 
 
 
