@@ -154,7 +154,25 @@ class Retrospective {
 
     if (!retrospective) throw new NotFoundError(`No retrospective: ${id}`);
   }
+
+  /**
+   * Retrospective data by project.
+   */
+
+  static async findByProject(projectId) {
+    const result = await db.query(
+      `SELECT id, facilitator, start_doing, stop_doing, continue_doing, 
+              action_items, lessons_learned, participant_name, created_at, updated_at 
+       FROM retrospectives
+       WHERE project_id = $1
+       ORDER BY created_at DESC`, // You can order by any field you like
+      [projectId]
+    );
+    return result.rows;
+  }
+  
 }
+
 
 module.exports = Retrospective;
 

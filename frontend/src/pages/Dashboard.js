@@ -63,7 +63,7 @@ const Dashboard = () => {
                   <Link to="/add-project">
                     <button className="btn bg-indigo-500 text-white p-2 rounded hover:bg-indigo-600">Add a Project</button>
                   </Link>
-                  <Link to="/start-retrospective">
+                  <Link to="/retrospectives">
                     <button className="btn bg-green-500 text-white p-2 rounded hover:bg-green-600">Start a Retrospective</button>
                   </Link>
               </div>

@@ -114,4 +114,27 @@ router.delete("/:id", ensureAdmin, async function (req, res, next) {
   }
 });
 
+/** GET /by-project/:projectId
+ *
+ * Returns all retrospectives related to a specific project:
+ * [
+ *   { 
+ *     id, facilitator, start_doing, stop_doing, continue_doing, 
+ *     action_items, lessons_learned, participant_name, created_at, updated_at
+ *   },
+ *   ...
+ * ]
+ *
+ * Authorization required: none 
+ */
+router.get("/by-project/:projectId", async function (req, res, next) {
+  try {
+    const retrospectives = await Retrospective.findByProject(req.params.projectId);
+    return res.json(retrospectives);
+  } catch (err) {
+    return next(err);
+  }
+});
+
+
 module.exports = router;

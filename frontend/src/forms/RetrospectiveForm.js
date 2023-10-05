@@ -27,24 +27,35 @@ const RetrospectiveForm = ({ onSubmit }) => {
 
   const handleSubmit = async evt => {
     evt.preventDefault();
-
     try {
-      await onSubmit(formData);
-      setMessage('Retrospective data submitted successfully!');
-      setFormData(INITIAL_STATE);
-    } catch (errors) {
-      setFormErrors(errors);
-      return;
+      const response = await fetch('/api/retrospective', {  // Adjust the endpoint if different
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      if (response.status !== 201) {
+        const data = await response.json();
+        setFormErrors(data.errors);
+        setMessage('Failed to submit retrospective data.');
+      } else {
+        setMessage('Retrospective data submitted successfully!');
+        setFormData(INITIAL_STATE);
+        setFormErrors([]);  // Reset the errors after successful submission
+      }
+    } catch (error) {
+      setMessage('An unexpected error occurred.');
+      console.error("There was an error submitting the retrospective data:", error);
     }
-
-    setFormErrors([]);
   };
 
   return (
     <div className="RetrospectiveForm mx-auto mt-5 flex flex-col items-center justify-center w-full md:w-6/12 lg:w-6/12 p-8 min-w-full md:min-w-3/4 lg:min-w-3/4">
       <div className="card bg-white shadow-lg rounded-lg p-6">
         <div className="card-body">
-          <h1 className="text-2xl font-bold mb-4 text-center">Start a New Retrospective</h1>
+          <h1 className="text-2xl font-bold mb-4 text-center">Participant Form</h1>
           <form className="RetrospectiveForm-form space-y-4" onSubmit={handleSubmit}>
             
             {/* Facilitator field */}
@@ -159,7 +170,7 @@ const RetrospectiveForm = ({ onSubmit }) => {
               type="submit"
               className="btn w-full py-2 mt-4 bg-indigo-500 text-white rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
             >
-              Submit Retrospective Data
+              Submit
             </button>
           </form>
         </div>

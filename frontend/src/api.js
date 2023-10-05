@@ -143,6 +143,16 @@ class HindsightApi {
   static async deleteRetrospective(id) {
     await this.request(`retrospectives/${id}`, {}, 'delete');
   }
+
+  // Get retrospectives for a specific project by its ID
+  static async getRetrospectivesByProject(projectId) {
+    if (!projectId) {
+      console.error('Project ID is not defined');
+      return;
+    }
+    let res = await this.request(`retrospectives/by-project/${projectId}`);
+    return res.retrospectives;
+  }
 }
 
 // For now, put token ("testuser" or "testadmin" / "password" on class)

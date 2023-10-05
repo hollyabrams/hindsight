@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import HindsightApi from '../api';
+import ProjectRetrospectives from '../components/ProjectRetrospectives';
 
 export default function ProjectPage() {
     const [projects, setProjects] = useState([]);
+    const [selectedProjectId, setSelectedProjectId] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -16,7 +18,7 @@ export default function ProjectPage() {
     }, []);
 
     if (isLoading) {
-        return 'Loading...'; // add a loading state
+        return 'Loading...'; 
     }
 
     return (
@@ -26,25 +28,38 @@ export default function ProjectPage() {
                     Projects
                 </h1>
                 <div className="h-1 w-20 bg-indigo-500 rounded"></div>
-                <div className="mt-4 grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                    {projects.map(project => (
-                        <div
-                            key={project.id}
-                            className="p-6 bg-gray-800 rounded-lg shadow-md"
-                        >
-                            <h2 className="text-lg text-white font-semibold mb-2">
-                                {project.title}
-                            </h2>
-                            <p className="text-gray-300">{project.description}</p>
-                            <p className="text-green-500 mt-2">Status: {project.status}</p>
-                            <p className="text-yellow-500 mt-1">Deadline: {project.deadline}</p>
-                        </div>
-                    ))}
-                </div>
+
+                {selectedProjectId ? (
+                    <ProjectRetrospectives projectId={selectedProjectId} />
+                ) : (
+                    <div className="mt-4 grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                        {projects.map(project => (
+                            <div
+                                key={project.id}
+                                className="p-6 bg-gray-800 rounded-lg shadow-md"
+                            >
+                                <h2 className="text-lg text-white font-semibold mb-2">
+                                    {project.title}
+                                </h2>
+                                <p className="text-gray-300">{project.description}</p>
+                                <p className="text-green-500 mt-2">Status: {project.status}</p>
+                                <p className="text-yellow-500 mt-1">Deadline: {project.deadline}</p>
+                                <button 
+                                    className="mt-3 bg-indigo-500 hover:bg-indigo-600 py-2 px-4 rounded text-white"
+                                    onClick={() => setSelectedProjectId(project.id)}
+                                >
+                                    View Retrospectives
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
             </div>
         </section>
     );
 }
+
 
 
 
