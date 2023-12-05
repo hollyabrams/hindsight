@@ -1,5 +1,5 @@
 # Hindsight
-![Hindsight](frontend/public/hindsight.png)
+![Hindsight](frontend/public/hindsight.gif)
 
 
 ## Overview
